@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Test SQLite database connection"""
+"""Test SQLite database connection and schema presence"""
 
 import sqlite3
 import sys
@@ -18,10 +18,17 @@ try:
     cursor = conn.cursor()
     cursor.execute("SELECT sqlite_version()")
     version = cursor.fetchone()[0]
+
+    # Verify todos table exists
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='todos'")
+    row = cursor.fetchone()
+    has_todos = row is not None
+
     conn.close()
     
     print(f"SQLite version: {version}")
-    sys.exit(0)
+    print(f"Todos table present: {has_todos}")
+    sys.exit(0 if has_todos else 2)
     
 except sqlite3.Error as e:
     print(f"Connection failed: {e}")
