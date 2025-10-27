@@ -10,6 +10,11 @@ Exposes:
 CORS is enabled for http://localhost:3000
 
 Server binds to 0.0.0.0:5001
+- If port 5001 is in use, set PORT=5002 (or any open port) before running:
+  PORT=5002 python3 api_server.py
+
+Frontend default API base URL is http://localhost:5001 (see todo_frontend/src/App.js).
+If you change the API port, update the frontend API base accordingly.
 """
 
 from flask import Flask, jsonify, request
